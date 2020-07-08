@@ -1,5 +1,5 @@
-const { Schema } = require('mongoose'),
-  conn = require('../../conn/index');
+const { Schema } = require('mongoose')
+const conn = require('../../conn/index')
 
 const UserSchema = new Schema(
   {
@@ -33,6 +33,6 @@ const UserSchema = new Schema(
     collection: 'User',
     timestamps: true
   }
-);
+)
 
-exports.User =  conn.model('User', UserSchema);
+exports.User = conn.model('User', UserSchema)

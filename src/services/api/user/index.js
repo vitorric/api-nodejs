@@ -1,26 +1,25 @@
-const { getUserByEmail, createUser } = require('../../../repositories/user'),
-  { createToken } = require('../../passport/create'),
-  { encrypt } = require('../../../utils');
+const { getUserByEmail, createUser } = require('../../../repositories/user')
+const { createToken } = require('../../passport/create')
+const { encrypt } = require('../../../utils')
 
 exports.userSignUp = async ({ name, email, password, whatsapp }) => {
-
   if (!name ||
       !email ||
       !password) {
-    throw { msg: 'Informações faltantes' };
+    throw new Error({ msg: 'Informações faltantes' })
   }
 
-  let user = await getUserByEmail(email);
+  let user = await getUserByEmail(email)
 
   if (user) {
-    throw { msg: 'Usuário já cadastrado' };
+    throw new Error({ msg: 'Usuário já cadastrado' })
   }
 
-  const encryptedPassword = encrypt(password);
-  user = await createUser({ name, email, password: encryptedPassword, role: 'user', whatsapp });
+  const encryptedPassword = encrypt(password)
+  user = await createUser({ name, email, password: encryptedPassword, role: 'user', whatsapp })
 
   if (user) {
-    const token = createToken({ _id: user._id });
+    const token = createToken({ _id: user._id })
 
     return {
       user: {
@@ -29,14 +28,14 @@ exports.userSignUp = async ({ name, email, password, whatsapp }) => {
         role: user.role
       },
       token
-    };
+    }
   }
 
-  throw { msg: 'Falha ao criar o usuário!' };
-};
+  throw new Error({ msg: 'Falha ao criar o usuário!' })
+}
 
 exports.loginUser = async (user) => {
-  const token = createToken({ _id: user._id });
+  const token = createToken({ _id: user._id })
   return {
     user: {
       name: user.name,
@@ -44,5 +43,5 @@ exports.loginUser = async (user) => {
       role: user.role
     },
     token
-  };
-};
+  }
+}

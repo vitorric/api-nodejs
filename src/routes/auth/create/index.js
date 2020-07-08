@@ -1,8 +1,8 @@
-const { resJsonP } = require('../../../utils'),
-  { userSignUp } = require('../../../services/api/user');
+const { resJsonP } = require('../../../utils')
+const { userSignUp } = require('../../../services/api/user')
 
 module.exports = () => (req, res) => {
-  userSignUp({ ...req.body})
+  userSignUp({ ...req.body })
     .then(result => resJsonP(res, 200, true, result))
-    .catch(err => resJsonP(res, 200, false, err));
-};
+    .catch(err => resJsonP(res, 200, false, err))
+}
