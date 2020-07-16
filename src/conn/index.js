@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
-const config = require('../../config/env');
 
-let ambiente = process.env.NODE_ENV;
+let config = {
+  MONGO_HOST: process.env.MONGO_HOST,
+  MONGO_PORT: process.env.MONGO_PORT,
+  MONGO_DB: process.env.MONGO_DB,
+  MONGO_AUTH_SOURCE: process.env.MONGO_AUTH_SOURCE,
+  MONGO_USER: process.env.MONGO_USER,
+  MONGO_PWD: process.env.MONGO_PWD
+};
 
 //mongoose.Promise = Promise;
 let options = {
@@ -15,12 +21,12 @@ let options = {
   useUnifiedTopology: true
 };
 
-const mongoUrl = `mongodb://${config[ambiente].MONGO_USER}:${config[ambiente].MONGO_PWD}@${config[ambiente].MONGO_HOST}:${config[ambiente].MONGO_PORT}/${config[ambiente].MONGO_DB}?authSource=${config[ambiente].MONGO_AUTH_SOURCE}&authMechanism=SCRAM-SHA-1`;
+const mongoUrl = `mongodb://${config.MONGO_USER}:${config.MONGO_PWD}@${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DB}?authSource=${config.MONGO_AUTH_SOURCE}&authMechanism=SCRAM-SHA-1`;
 
 const db = mongoose.createConnection(mongoUrl, options);
 
 db.once('connected', () => {
-  console.log('Mongodb connection', ambiente);
+  console.log('Mongodb connection', process.env.NODE_ENV);
   return db;
 });
 

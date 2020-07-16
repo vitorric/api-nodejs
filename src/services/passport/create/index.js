@@ -1,5 +1,4 @@
-const JWT = require('jsonwebtoken'),
-  {JWT_SECRET} = require('../../../../config');
+const JWT = require('jsonwebtoken');
 
 exports.createToken = (user) => {
   try
@@ -8,7 +7,7 @@ exports.createToken = (user) => {
       auth: user,
       exp: new Date(new Date().getFullYear(), 11, 31).getTime()
     },
-    JWT_SECRET);
+    process.env.JWT_SECRET);
   }
   catch (error)
   {

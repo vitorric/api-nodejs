@@ -1,7 +1,11 @@
 const express = require('express'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
+  path = require('path'),
+  dotenv = require('dotenv'),
   app = express();
+
+dotenv.config({ path: path.resolve(`.env.${process.env.NODE_ENV}`) });
 
 app.all('*', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

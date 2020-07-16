@@ -3,13 +3,12 @@ module.exports = () => {
     JwtStrategy = require('passport-jwt').Strategy,
     LocalStrategy = require('passport-local').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt,
-    { JWT_SECRET } = require('../../../../config'),
     { getUserById, getUserByEmail } = require('../../../repositories/user'),
     { encrypt } = require('../../../utils');
 
   passport.use('userAdminAuth', new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: JWT_SECRET
+    secretOrKey: process.env.JWT_SECRET
   }, async(payload,done) => {
 
     try{
